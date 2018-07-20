@@ -7,11 +7,40 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+/*Code Plan
+1. plan for ties if hand1 === hand2
+2. plan for hand1 wins
+3. write if statement for all hand1 wins with a ||
+4. repeat steps 2 and 3 for hand2
+5. trim whitespace (at the top of the function)
+6. make lowercase (at the top of the function)
+7. make a switch(hands) for misspellings
+8. make an output for invalid plays
+*/
 
 function rockPaperScissors(hand1, hand2) {
+  hand1 = hand1.trim();
+  hand2 = hand2.trim();
+  hand1 = hand1.toLowerCase();
+  hand2 = hand2.toLowerCase();
 
-  // Write code here
+  switch(hand1){
+    case 'rocks': case "rak": case ''
+  }
 
+  if(hand1 === hand2){
+    return "It's a tie!"
+  }
+  if((hand1 === "rock" && hand2 === "scissors")
+  ||(hand1 === "scissors" && hand2 === "paper")
+  ||(hand1 === "paper" && hand2 === "rock")){
+    return "Hand one wins!"
+  }
+  if((hand2 === "rock" && hand1 === "scissors")
+  ||(hand2 === "scissors" && hand1 === "paper")
+  ||(hand2 === "paper" && hand1 === "rock")){
+    return "Hand one wins!"
+  }
 }
 
 function getPrompt() {
