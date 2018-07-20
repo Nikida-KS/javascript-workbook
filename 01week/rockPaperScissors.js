@@ -25,7 +25,47 @@ function rockPaperScissors(hand1, hand2) {
   hand2 = hand2.toLowerCase();
 
   switch(hand1){
-    case 'rocks': case "rak": case ''
+    case 'rock':
+    case 'rocks': case "rak": case 'roc':
+    case 'racks': case 'rack': case 'rac':
+    case 'rocs': case "racs":
+    hand1 = "rock"
+    break;
+
+    case 'scissors':
+    case 'sissors': case 'scissor': case 'scissers':
+    case 'sissers': case 'scisser': case 'sissers':
+    case 'cissors': case 'scisors': case 'cissor':
+    case 'sisors': case 'scisor': case 'scisers':
+    hand1 = 'scissors'
+    break;
+
+    case 'paper':
+    case 'papers': case 'payper': case 'papr':
+    hand1 = 'paper'
+    break;
+
+    case 'rock':
+    case 'rocks': case 'rak': case 'roc':
+    case 'racks': case 'rack': case 'rac':
+    case 'rocs': case "racs":
+    hand2 = "rock"
+    break;
+
+    case 'scissors':
+    case 'sissors': case 'scissor': case 'scissers':
+    case 'sissers': case 'scisser': case 'sissers':
+    case 'cissors': case 'scisors': case 'cissor':
+    case 'sisors': case 'scisor': case 'scisers':
+    hand2 = 'scissors'
+    break;
+
+    case 'paper':
+    case 'papers': case 'payper': case 'papr':
+    hand2 = 'paper'
+    break;
+
+    default: return "Invalid play: Either you can't spell or you think you're funny"
   }
 
   if(hand1 === hand2){
@@ -39,7 +79,7 @@ function rockPaperScissors(hand1, hand2) {
   if((hand2 === "rock" && hand1 === "scissors")
   ||(hand2 === "scissors" && hand1 === "paper")
   ||(hand2 === "paper" && hand1 === "rock")){
-    return "Hand one wins!"
+    return "Hand two wins!"
   }
 }
 
