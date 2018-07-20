@@ -1,7 +1,7 @@
-if (this is that){
+if (x < 5){
   return "This"
 }
 
-else(
+else{
   return "That"
-)
+}
