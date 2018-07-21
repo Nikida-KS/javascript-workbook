@@ -44,6 +44,9 @@ function rockPaperScissors(hand1, hand2) {
     case 'papers': case 'payper': case 'papr':
     hand1 = 'paper'
     break;
+  }
+
+  switch(hand2){
 
     case 'rock':
     case 'rocks': case 'rak': case 'roc':
