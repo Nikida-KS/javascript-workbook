@@ -24,64 +24,95 @@ function rockPaperScissors(hand1, hand2) {
   hand1 = hand1.toLowerCase();
   hand2 = hand2.toLowerCase();
 
-  switch(hand1){
+  switch (hand1) {
     case 'rock':
-    case 'rocks': case "rak": case 'roc':
-    case 'racks': case 'rack': case 'rac':
-    case 'rocs': case "racs":
-    hand1 = "rock"
-    break;
+    case 'rocks':
+    case "rak":
+    case 'roc':
+    case 'racks':
+    case 'rack':
+    case 'rac':
+    case 'rocs':
+    case "racs":
+      hand1 = "rock"
+      break;
 
     case 'scissors':
-    case 'sissors': case 'scissor': case 'scissers':
-    case 'sissers': case 'scisser': case 'sissers':
-    case 'cissors': case 'scisors': case 'cissor':
-    case 'sisors': case 'scisor': case 'scisers':
-    hand1 = 'scissors'
-    break;
+    case 'sissors':
+    case 'scissor':
+    case 'scissers':
+    case 'sissers':
+    case 'scisser':
+    case 'sissers':
+    case 'cissors':
+    case 'scisors':
+    case 'cissor':
+    case 'sisors':
+    case 'scisor':
+    case 'scisers':
+      hand1 = 'scissors'
+      break;
 
     case 'paper':
-    case 'papers': case 'payper': case 'papr':
-    hand1 = 'paper'
-    break;
+    case 'papers':
+    case 'payper':
+    case 'papr':
+      hand1 = 'paper'
+      break;
   }
 
-  switch(hand2){
+  switch (hand2) {
 
     case 'rock':
-    case 'rocks': case 'rak': case 'roc':
-    case 'racks': case 'rack': case 'rac':
-    case 'rocs': case "racs":
-    hand2 = "rock"
-    break;
+    case 'rocks':
+    case 'rak':
+    case 'roc':
+    case 'racks':
+    case 'rack':
+    case 'rac':
+    case 'rocs':
+    case "racs":
+      hand2 = "rock"
+      break;
 
     case 'scissors':
-    case 'sissors': case 'scissor': case 'scissers':
-    case 'sissers': case 'scisser': case 'sissers':
-    case 'cissors': case 'scisors': case 'cissor':
-    case 'sisors': case 'scisor': case 'scisers':
-    hand2 = 'scissors'
-    break;
+    case 'sissors':
+    case 'scissor':
+    case 'scissers':
+    case 'sissers':
+    case 'scisser':
+    case 'sissers':
+    case 'cissors':
+    case 'scisors':
+    case 'cissor':
+    case 'sisors':
+    case 'scisor':
+    case 'scisers':
+      hand2 = 'scissors'
+      break;
 
     case 'paper':
-    case 'papers': case 'payper': case 'papr':
-    hand2 = 'paper'
-    break;
+    case 'papers':
+    case 'payper':
+    case 'papr':
+      hand2 = 'paper'
+      break;
 
-    default: return "Invalid play: Either you can't spell or you think you're funny"
+    default:
+      return "Invalid play: Either you can't spell or you think you're funny"
   }
 
-  if(hand1 === hand2){
+  if (hand1 === hand2) {
     return "It's a tie!"
   }
-  if((hand1 === "rock" && hand2 === "scissors")
-  ||(hand1 === "scissors" && hand2 === "paper")
-  ||(hand1 === "paper" && hand2 === "rock")){
+  if ((hand1 === "rock" && hand2 === "scissors") ||
+    (hand1 === "scissors" && hand2 === "paper") ||
+    (hand1 === "paper" && hand2 === "rock")) {
     return "Hand one wins!"
   }
-  if((hand2 === "rock" && hand1 === "scissors")
-  ||(hand2 === "scissors" && hand1 === "paper")
-  ||(hand2 === "paper" && hand1 === "rock")){
+  if ((hand2 === "rock" && hand1 === "scissors") ||
+    (hand2 === "scissors" && hand1 === "paper") ||
+    (hand2 === "paper" && hand1 === "rock")) {
     return "Hand two wins!"
   }
 }
@@ -89,7 +120,7 @@ function rockPaperScissors(hand1, hand2) {
 function getPrompt() {
   rl.question('hand1: ', (answer1) => {
     rl.question('hand2: ', (answer2) => {
-      console.log( rockPaperScissors(answer1, answer2) );
+      console.log(rockPaperScissors(answer1, answer2));
       getPrompt();
     });
   });
