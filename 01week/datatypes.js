@@ -1,30 +1,30 @@
 'use strict'
 
 //Write a JavaScript program to display the current day and time.
-const year = new Date().getFullYear();
-const month = new Date().getMonth();
-const day = new Date().getDate();
-const hour = new Date().getHours();
-const minute = new Date().getMinutes();
 
-console.log(`The day of our lord: ${month}/${day}/${year}`)
-console.log(`The time of our life: ${hour}:${minute}`)
+const dateAndTime = () => {
+  return "It's " + new Date().getMonth() + "/" + new Date().getDate() + "/"
+  + new Date().getFullYear() + " " + new Date().getHours() + ":" + new Date().getMinutes()
+}
 
-//this is called template literal using backticks
+console.log(dateAndTime());
 
-console.log("It's " + new Date().getMonth() + "/" + new Date().getDate() + "/" + new Date().getFullYear());
 
 //Write a JavaScript program to convert a number to a string.
 
-const stringMe = 15;
-const strung = stringMe.toString();
-console.log(strung + ' is a ' + typeof strung);
+const stringMe = (pickANumber) => {
+  return pickANumber.toString();
+}
+
+console.log(typeof stringMe(15));
 
 //Write a JavaScript program to convert a string to the number.
 
-const numMe = 25;
-const numbed = parseInt(numMe, 10);
-console.log(numbed + ' is a ' + typeof numbed);
+const numMe = (stringynum) => {
+   return parseInt(stringynum, 10);
+}
+
+console.log(typeof numMe('15'));
 
 /*Write a JavaScript program that takes in different datatypes and prints out whether they are a:
 Boolean
