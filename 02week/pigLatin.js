@@ -14,8 +14,15 @@ pig latin code plan
   1. Check that input is a string
   2. Check for other things such as
 
+isValidWord= (word) =>{
+
+}
 
 1. Write a function that takes in the word and returns the word as a lower case, whitespace-trimmed word
+
+caseSpace= (word) => {
+  word = word.toLowerCase().trim();
+}
 
 2. Write a function that checks for a vowel
 
@@ -57,9 +64,6 @@ const consonantStartAyEnd = (word) => {
       word = chunk + moveConsonants + "ay";
     return word;
     }
-    else{
-     return word = word + "ay"
-   }
   }
 }
 
