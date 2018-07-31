@@ -72,20 +72,27 @@ const isValid = (word) => {
   word = word.toLowerCase().trim();
   //checks if string includes a space, hyphen or underscore
   if(word.includes(" ")||word.includes("-") ||word.includes("_")){
-    return "This game only works one word at a time"
+    return "This pig only latins one word at a time today"
   }
   else{
-  //makes sure the word starts with a letter
+  //makes sure the word only has letters
+      const letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+      let letterChecker = 0
   for (var i = 0; i < word.length; i++){
-      if(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"].indexOf(word[0]) > -1){
+      if(letters.indexOf(word[i]) > -1){
+        letterChecker = letterChecker +1
+      }
+    }
+    if(letterChecker == word.length){
       return vowelStartYayEnd(word);
-      }
-      else{
-        return "You could at least start your weird word with a letter...."
-      }
+    }
+    else{
+      return "Silly rabbit, pig latin is for letters!"
     }
   }
 }
+
 
 function pigLatin(word) {
 
