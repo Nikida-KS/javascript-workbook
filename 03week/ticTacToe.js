@@ -125,13 +125,13 @@ function diagonalWin() {
 
 function checkForWin(){
   if(diagonalWin() || verticalWin()|| horizontalWin()){
-    console.log(playerTurn + "wins!");
-    return true;
     board = [
     [' ', ' ', ' '],
     [' ', ' ', ' '],
     [' ', ' ', ' ']
     ];
+    console.log("Player " + playerTurn + " wins! Play again:");
+    return true;
   }
   else{
     switchPlayers();
