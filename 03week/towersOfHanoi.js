@@ -19,24 +19,60 @@ function printStacks() {
   console.log("c: " + stacks.c);
 }
 
-function movePiece() {
-  // Your code here
 
+function movePiece(startStack, endStack) {
+  stacks[endStack].push(stacks[startStack].pop());
+  checkForWin(startStack, endStack);
 }
 
-function isLegal() {
-  // Your code here
 
+function isLegal(startStack, endStack) {
+  if((startStack === "a" || startStack === "b" || startStack === "c")
+    && (endStack === "a" || endStack === "b" || endStack === "c")){
+    let startLast = stacks[startStack][stacks[startStack].length-1];
+    let endLast = stacks[endStack][stacks[endStack].length-1];
+    console.log(startLast, endLast);
+    if(stacks[startStack].length > 0){
+      if(endLast > startLast || !endLast){
+        movePiece(startStack, endStack);
+        return true;
+      }
+      else{
+      console.log("you can't put a larger number on a smaller number")
+      return false
+      }
+    }
+    else{
+      console.log("you can't move a number that isn't there")
+      return false
+    }
+  }
+  else{
+    console.log("you have to use a, b, or c")
+    return false
+  }
 }
+
 
 function checkForWin() {
-  // Your code here
-
+  if(stacks.b.toString()==="4,3,2,1"){
+    console.log("You win!")
+    stacks = {
+      a: [4, 3, 2, 1],
+      b: [],
+      c: [],
+    };
+    return true
+  }
+  else{
+    printStacks();
+    return false
+  }
 }
 
-function towersOfHanoi(startStack, endStack) {
-  // Your code here
 
+function towersOfHanoi(startStack, endStack) {
+  isLegal(startStack, endStack);
 }
 
 function getPrompt() {
