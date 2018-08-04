@@ -45,7 +45,7 @@ caseSpace= (word) => {
 const vowelStartYayEnd = (word) => {
   //checks if anything in the array (vowels) is in the first position (first letter) of the word. This method returns -1 if it doesn't match anything in the array
   if (["a", "e", "i", "o", "u"].indexOf(word[0]) > -1) {
-    return word = word + "yay"
+    return word + "yay"
   } else {
     return consonantStartAyEnd(word);
   }
@@ -56,19 +56,23 @@ const consonantStartAyEnd = (word) => {
   for (var i = 0; i < word.length; i++) {
     if (["a", "e", "i", "o", "u"].indexOf(word[i]) > -1) {
       //moveConsonants saves the string from position 0 to the position of the first vowel
-      let moveConsonants = word.slice(0, i);
+      const moveConsonants = word.slice(0, i);
       //chunk saves the string from the position of the first vowel to the end of the string
-      let chunk = word.slice(i, word.length);
+      const  chunk = word.slice(i, word.length);
       //puts all of the pieces together
-      word = chunk + moveConsonants + "ay";
-      return word;
+      return chunk + moveConsonants + "ay";
     }
   }
 }
 
-const isValid = (word) => {
+const caseSpace = (word) => {
   //lowercases all of the letters and trims whitespace from the front or the back
-  word = word.toLowerCase().trim();
+  return word.toLowerCase().trim();
+}
+
+
+
+const isValid = (word) => {
   //checks if string includes a space, hyphen or underscore
   if (word.includes(" ") || word.includes("-") || word.includes("_")) {
     return "This pig only latins one word at a time today"
@@ -91,7 +95,7 @@ const isValid = (word) => {
 
 
 function pigLatin(word) {
-  return isValid(word)
+  return isValid(caseSpace(word));
 }
 
 
