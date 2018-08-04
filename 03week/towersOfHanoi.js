@@ -32,7 +32,6 @@ function printStacks() {
 
 function movePiece(startStack, endStack) {
   stacks[endStack].push(stacks[startStack].pop());
-  checkForWin(startStack, endStack);
 }
 
 function isLegal(startStack, endStack) {
@@ -43,7 +42,6 @@ function isLegal(startStack, endStack) {
     if(stacks[startStack].length > 0){
       if(endLast !== startLast){
         if(endLast > startLast || !endLast){
-          movePiece(startStack, endStack);
           return true;
         }
         else{
@@ -66,11 +64,13 @@ function isLegal(startStack, endStack) {
   }
 }
 
+//instead of a reset- I wrote this
 function resetGame(){
   if(stacks.b[0] < 9){
     stacks.b.unshift(stacks.b[0]+1);
     const reset = stacks.b.slice(0, stacks.b.length);
     stacks.a.push(reset);
+    //can't slice an array into emptiness
     stacks.b.length=0;
   }
   else{
@@ -87,7 +87,6 @@ function checkForWin() {
   if(stacks.a.length == 0 && stacks.c.length == 0){
     console.log("GREAT JOB!!!!!");
     console.log("Welcome to the next level");
-    resetGame();
     return true
   }
   else{
@@ -96,7 +95,12 @@ function checkForWin() {
 }
 
 function towersOfHanoi(startStack, endStack) {
-  isLegal(startStack, endStack);
+  if(isLegal(startStack, endStack)){
+    movePiece(startStack, endStack);
+    if(checkForWin()){
+      resetGame();
+    }
+  }
 }
 
 function getPrompt() {
