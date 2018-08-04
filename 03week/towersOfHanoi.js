@@ -33,7 +33,7 @@ function printStacks() {
     *Push the pop of start stack to the end stack
 4. Figure out what ACA means by reset function and write it
     *I assign a flash version of game as an extension to my fifth graders, so I
-     wanted to add the next level instead of a reset. 
+     wanted to add the next level instead of a reset.
 */
 
 
@@ -71,7 +71,8 @@ function isLegal(startStack, endStack) {
   }
 }
 
-//instead of a reset- I wrote this
+//instead of a reset- I wrote this to add more levels.
+//It could be infinite, but games are meant to be won!
 function resetGame(){
   if(stacks.b[0] < 9){
     stacks.b.unshift(stacks.b[0]+1);
