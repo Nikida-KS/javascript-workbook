@@ -21,12 +21,19 @@ function printStacks() {
 
 /*Code Plan
 1. Write checkForWin function to check if all of the numbers are in the b row in order
+    *I started with stacks.b.toString() = "4,3,2,1"
+     but then I wrote the reset function to add another level
+    *If stacks.a and stacks.c are empty (and the isLegal function works)
+     then the all of the numbers used must be in order in stacks.b
 2. Write isLegal function to check:
     1. Did the user enter a, b, or c?
     2. Did the user pick from a row that has a number?
     3. Did the user choose a smaller number to go on a bigger number?
 3. Write movePiece function to append the last number in startStack to endStack
+    *Push the pop of start stack to the end stack
 4. Figure out what ACA means by reset function and write it
+    *I assign a flash version of game as an extension to my fifth graders, so I
+     wanted to add the next level instead of a reset. 
 */
 
 
