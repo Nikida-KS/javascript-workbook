@@ -32,17 +32,32 @@ function printStacks() {
 3. Write movePiece function to append the last number in startStack to endStack
     *Push the pop of start stack to the end stack
 4. Figure out what ACA means by reset function and write it
-    *I assign a flash version of game as an extension to my fifth graders, so I
-     wanted to add the next level instead of a reset.
+Bonus. Add more levels!!!
 */
 
-
+//detaches the last number in the array of the start stack
+//and appends it to the end stack AT THE SAME TIME
 function movePiece(startStack, endStack) {
   stacks[endStack].push(stacks[startStack].pop());
 }
 
+//resets the stack to the starting position
+function resetGame() {
+  stacks = {
+    a: [4, 3, 2, 1],
+    b: [],
+    c: []
+  };
+}
+
+//The isLegal function first checks if the player wanted to reset the game, if not
+//then it makes sure the player chose actual stacks, that have something in them
+//then it makes sure the player puts the chosen number on top of a number that isn't itself or smaller
 function isLegal(startStack, endStack) {
-  if((startStack === "a" || startStack === "b" || startStack === "c")
+  if(startStack === "reset" || endStack === "reset"){
+    resetGame();
+  }
+  else if((startStack === "a" || startStack === "b" || startStack === "c")
     && (endStack === "a" || endStack === "b" || endStack === "c")){
     const startLast = stacks[startStack][stacks[startStack].length-1];
     const endLast = stacks[endStack][stacks[endStack].length-1];
@@ -71,9 +86,13 @@ function isLegal(startStack, endStack) {
   }
 }
 
-//instead of a reset- I wrote this to add more levels.
-//It could be infinite, but games are meant to be won!
-function resetGame(){
+/*
+This adds more levels once the game is won by unshifting the biggest number plus one
+in front of the biggest number (which will be in position zero of the array since the function
+is called once the game is won)
+*/
+
+function nextLevel(){
   if(stacks.b[0] < 9){
     stacks.b.unshift(stacks.b[0]+1);
     const reset = stacks.b.slice(0, stacks.b.length);
@@ -91,6 +110,8 @@ function resetGame(){
   }
 }
 
+/*This checks for a win because the game only allows legal moves
+so if there are no numbers left in a or c then all of them are correctly ordered in b*/
 function checkForWin() {
   if(stacks.a.length == 0 && stacks.c.length == 0){
     console.log("GREAT JOB!!!!!");
@@ -106,7 +127,7 @@ function towersOfHanoi(startStack, endStack) {
   if(isLegal(startStack, endStack)){
     movePiece(startStack, endStack);
     if(checkForWin()){
-      resetGame();
+      nextLevel();
     }
   }
 }
