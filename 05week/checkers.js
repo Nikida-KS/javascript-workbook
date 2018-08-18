@@ -7,15 +7,81 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+//MVP
 
-function Checker() {
+//Check for legal move
+  //whichPiece must have something to move
+  //toWhere must be >=0 && toWhere <8 so it stays on the board
+  //toWhere must be null
+
+  //X can only
+    //kill
+    //or move up one row and left/right one column ([r+1]&&[c-1] || [c+1])
+
+  //Y can only
+    //kill
+    //or move down one row and left/right one column ([r-1]&&[c-1] || [c+1])
+
+//Move the piece
+  //Replace whichPiece with a null and toWhere with current turn
+
+//Kill
+  //X can kill a Y that is one row and left/right one column ([r+1]&&[c-1] || [c+1])
+  //Y can kill an X that is down one row and left/right one column ([r-1]&&[c-1] || [c+1])
+  //Replace 'jumped' piece with a null
+
+//Switch players
+
+
+
+
+function Checkers() {
   // Your code here
+}
+
+
+//Creates checkers that assign a symbol to a player
+class Checker {
+  constructor(player, symbol){
+    this.player = player
+    this.symbol = symbol;
+    if (player === 'playerX') {
+      this.symbol = "X";
+    }
+    else {
+      this.symbol = "Y";
+    }
+  }
 }
 
 class Board {
   constructor() {
-    this.grid = []
+    this.grid = [];
+    this.checkers = [];
   }
+  // Put X's on 01, 03, 05, 07, 10, 12, 14, 16, 21, 23, 25, 27
+  // Put Y's on 50, 52, 54, 56, 61, 63, 65, 67, 70, 72, 74, 76
+  createCheckers(){
+    let xPositions = [[0, 1], [0, 3], [0, 5], [0, 7],
+                      [1, 0], [1, 2], [1, 4], [1, 6],
+                      [2, 1], [2, 3], [2, 5], [2, 7]];
+    let oPositions = [[5, 0], [5, 2], [5, 4], [5, 6],
+                      [6, 1], [6, 3], [6, 5], [6, 7],
+                      [7, 0], [7, 2], [7, 4], [7, 6]];
+  // Loops through the Positions arrays to push a new Checker at each coordinate
+    for (let i = 0; i <= 11; i++) {
+      let xChecker = new Checker('playerX');
+      this.checkers.push("xChecker");
+      let coordinate = xPositions[i];
+      this.grid[coordinate[0]][coordinate[1]] = xChecker;
+
+      let oChecker = new Checker('playerO');
+      this.checkers.push(oChecker);
+      let coordinate2 = oPositions[i];
+      this.grid[coordinate2[0]][coordinate2[1]] = oChecker;
+    }
+  }
+
   // method that creates an 8x8 array, filled with null values
   createGrid() {
     // loop to create the 8 rows
@@ -26,6 +92,7 @@ class Board {
         this.grid[row].push(null);
       }
     }
+
   }
   viewGrid() {
     // add our column numbers
@@ -51,16 +118,15 @@ class Board {
     }
     console.log(string);
   }
-
-  // Your code here
 }
 
 class Game {
   constructor() {
-    this.board = new Board;
+    this.board = new Board()
   }
   start() {
     this.board.createGrid();
+    this.board.createCheckers();
   }
 }
 
