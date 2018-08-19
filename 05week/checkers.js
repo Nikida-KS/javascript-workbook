@@ -128,6 +128,15 @@ class Game {
     this.board.createGrid();
     this.board.createCheckers();
   }
+  //Move the piece
+    //Replace whichPiece with a null and toWhere with current turn
+  moveChecker(whichPiece, toWhere){
+    let whichCoordinate = whichPiece.split('');
+    let checkerPlay = this.board.grid[whichCoordinate[0]][whichCoordinate[1]];
+    this.board.grid[whichCoordinate[0]][whichCoordinate[1]] = null;
+    let whereCoordinate = toWhere.split('');
+    this.board.grid[whereCoordinate[0]][whereCoordinate[1]] = checkerPlay;
+  }
 }
 
 function getPrompt() {
