@@ -65,7 +65,7 @@ class Board {
     let xPositions = [[0, 1], [0, 3], [0, 5], [0, 7],
                       [1, 0], [1, 2], [1, 4], [1, 6],
                       [2, 1], [2, 3], [2, 5], [2, 7]];
-    let oPositions = [[5, 0], [5, 2], [5, 4], [5, 6],
+    let yPositions = [[5, 0], [5, 2], [5, 4], [5, 6],
                       [6, 1], [6, 3], [6, 5], [6, 7],
                       [7, 0], [7, 2], [7, 4], [7, 6]];
   // Loops through the Positions arrays to push a new Checker at each coordinate
@@ -75,10 +75,10 @@ class Board {
       let coordinate = xPositions[i];
       this.grid[coordinate[0]][coordinate[1]] = xChecker;
 
-      let oChecker = new Checker('playerO');
-      this.checkers.push(oChecker);
-      let coordinate2 = oPositions[i];
-      this.grid[coordinate2[0]][coordinate2[1]] = oChecker;
+      let yChecker = new Checker('playerY');
+      this.checkers.push(yChecker);
+      let coordinate2 = yPositions[i];
+      this.grid[coordinate2[0]][coordinate2[1]] = yChecker;
     }
   }
 
@@ -92,7 +92,6 @@ class Board {
         this.grid[row].push(null);
       }
     }
-
   }
   viewGrid() {
     // add our column numbers
@@ -120,6 +119,8 @@ class Board {
   }
 }
 
+let player = "playerX";
+
 class Game {
   constructor() {
     this.board = new Board()
@@ -128,14 +129,85 @@ class Game {
     this.board.createGrid();
     this.board.createCheckers();
   }
-  //Move the piece
-    //Replace whichPiece with a null and toWhere with current turn
+
   moveChecker(whichPiece, toWhere){
+    let coordinatePairPair = (whichPiece+toWhere).split('');
     let whichCoordinate = whichPiece.split('');
-    let checkerPlay = this.board.grid[whichCoordinate[0]][whichCoordinate[1]];
-    this.board.grid[whichCoordinate[0]][whichCoordinate[1]] = null;
+      let whichRow = Number(whichCoordinate[0]);
+      let whichColumn = Number(whichCoordinate[1]);
     let whereCoordinate = toWhere.split('');
-    this.board.grid[whereCoordinate[0]][whereCoordinate[1]] = checkerPlay;
+      let whereRow = Number(whereCoordinate[0]);
+      let whereColumn = Number(whereCoordinate[1]);
+    let checkerPlay = this.board.grid[whichRow][whichColumn];
+    let checkerPlace = this.board.grid[whereRow][whereColumn];
+
+    if(game.isCoordinate(coordinatePairPair)){
+      if(game.isNumberOnBoard(coordinatePairPair)){
+        if(game.isChecker(checkerPlay, checkerPlace)){
+          if(game.isForward(checkerPlay, whereRow, whichRow)){
+            if(game.isKillAttempt(whereColumn, whichColumn, whereRow, whichRow)){
+              console.log('learn to kill')
+            }
+            else{
+              if(game.isSingleMoveAttempt(whereColumn, whichColumn, whereRow, whichRow)){
+                 game.singleMove(whichRow, whichColumn, whereRow, whereColumn, checkerPlay);
+                 game.switchPlayers();
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  isNumberOnBoard(coordinatePairPair){
+    let numbers = ['0', '1', '2', '3', '4', '5', '6', '7'];
+    let allNumbers = 0
+    for(var i=0; i<4; i++){
+      if(numbers.indexOf(coordinatePairPair[i]) > -1){
+        allNumbers++
+      }
+    }
+    return(allNumbers === 4)
+  }
+
+  isChecker(checkerPlay, checkerPlace){
+    return checkerPlay !== null && checkerPlace == null
+  }
+
+  isCoordinate(coordinatePairPair){
+    return coordinatePairPair.length === 4
+  }
+
+  isForward(checkerPlay, whereRow, whichRow){
+    if(player==="playerX" && checkerPlay.player === "playerX"){
+      return (whereRow > whichRow)
+    }
+    else if(player==="playerY" && checkerPlay.player === "playerY"){
+      return (whereRow < whichRow)
+    }
+  }
+
+  isKillAttempt(whereColumn, whichColumn, whereRow, whichRow){
+    return (Math.abs(whereColumn-whichColumn)===2 && Math.abs(whereRow-whichRow)==2)
+  }
+
+  isSingleMoveAttempt(whereColumn, whichColumn, whereRow, whichRow){
+    return (Math.abs(whereColumn-whichColumn)===1 && Math.abs(whereRow-whichRow)==1)
+  }
+
+  singleMove(whichRow, whichColumn, whereRow, whereColumn, checkerPlay){
+    this.board.grid[whichRow][whichColumn] = null;
+    this.board.grid[whereRow][whereColumn] = checkerPlay;
+  }
+
+  switchPlayers(){
+    if(player === "playerX"){
+      player = "playerY"
+    }
+    else{
+      player = "playerX"
+    }
   }
 }
 
