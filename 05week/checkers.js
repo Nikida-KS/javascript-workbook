@@ -146,7 +146,11 @@ class Game {
         if(game.isChecker(checkerPlay, checkerPlace)){
           if(game.isForward(checkerPlay, whereRow, whichRow)){
             if(game.isKillAttempt(whereColumn, whichColumn, whereRow, whichRow)){
-              console.log('learn to kill')
+              if(game.canKill(whereColumn, whichColumn, whereRow, whichRow, checkerPlay, checkerPlace)){
+                game.kill(whereColumn, whichColumn, whereRow, whichRow, checkerPlay, checkerPlace);
+                game.switchPlayers();
+                console.log(game.board.checkers.length)
+              }
             }
             else{
               if(game.isSingleMoveAttempt(whereColumn, whichColumn, whereRow, whichRow)){
@@ -192,6 +196,49 @@ class Game {
     return (Math.abs(whereColumn-whichColumn)===2 && Math.abs(whereRow-whichRow)==2)
   }
 
+  canKill(whereColumn, whichColumn, whereRow, whichRow, checkerPlay, checkerPlace){
+    let prey = null
+    if(player === 'playerX'){
+      if(whereColumn > whichColumn){
+        prey = this.board.grid[whichRow+1][whichColumn+1]
+      }
+      else if(whereColumn < whichColumn){
+        prey = this.board.grid[whichRow+1][whichColumn-1]
+      }
+    }
+    else if(player === 'playerY'){
+      if(whereColumn > whichColumn){
+        prey = this.board.grid[whichRow-1][whichColumn+1]
+      }
+      else if(whereColumn < whichColumn){
+        prey = this.board.grid[whichRow-1][whichColumn-1]
+      }
+    }
+    return (prey !== null && prey !== checkerPlay)
+  }
+
+  kill(whereColumn, whichColumn, whereRow, whichRow, checkerPlay, checkerPlace){
+    this.board.grid[whichRow][whichColumn] = null;
+    this.board.grid[whereRow][whereColumn] = checkerPlay;
+    this.board.checkers.pop();
+    if(player === 'playerX'){
+      if(whereColumn > whichColumn){
+        this.board.grid[whichRow+1][whichColumn+1] = null
+      }
+      else if(whereColumn < whichColumn){
+        this.board.grid[whichRow+1][whichColumn-1] = null
+      }
+    }
+    else if(player === 'playerY'){
+      if(whereColumn > whichColumn){
+        this.board.grid[whichRow-1][whichColumn+1] = null
+      }
+      else if(whereColumn < whichColumn){
+        this.board.grid[whichRow-1][whichColumn-1] = null
+      }
+    }
+  }
+
   isSingleMoveAttempt(whereColumn, whichColumn, whereRow, whichRow){
     return (Math.abs(whereColumn-whichColumn)===1 && Math.abs(whereRow-whichRow)==1)
   }
@@ -208,6 +255,7 @@ class Game {
     else{
       player = "playerX"
     }
+    console.log(player)
   }
 }
 
