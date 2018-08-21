@@ -45,11 +45,11 @@ class Checker {
   constructor(player, symbol){
     this.player = player
     this.symbol = symbol;
-    if (player === 'playerX') {
-      this.symbol = "X";
+    if (player === 'playerY') {
+      this.symbol = "Y";
     }
     else {
-      this.symbol = "Y";
+      this.symbol = "X";
     }
   }
 }
@@ -57,27 +57,28 @@ class Checker {
 class Board {
   constructor() {
     this.grid = [];
+    //keep track of how many checkers are on the board
     this.checkers = [];
   }
   // Put X's on 01, 03, 05, 07, 10, 12, 14, 16, 21, 23, 25, 27
   // Put Y's on 50, 52, 54, 56, 61, 63, 65, 67, 70, 72, 74, 76
   createCheckers(){
-    let xPositions = [[0, 1], [0, 3], [0, 5], [0, 7],
+    const xPositions = [[0, 1], [0, 3], [0, 5], [0, 7],
                       [1, 0], [1, 2], [1, 4], [1, 6],
                       [2, 1], [2, 3], [2, 5], [2, 7]];
-    let yPositions = [[5, 0], [5, 2], [5, 4], [5, 6],
+    const yPositions = [[5, 0], [5, 2], [5, 4], [5, 6],
                       [6, 1], [6, 3], [6, 5], [6, 7],
                       [7, 0], [7, 2], [7, 4], [7, 6]];
-  // Loops through the Positions arrays to push a new Checker at each coordinate
+  // Loops through the Positions arrays to assign a new Checker at each coordinate and push to the game.checker array 
     for (let i = 0; i <= 11; i++) {
-      let xChecker = new Checker('playerX');
+      const xChecker = new Checker('playerX');
       this.checkers.push("xChecker");
-      let coordinate = xPositions[i];
+      const coordinate = xPositions[i];
       this.grid[coordinate[0]][coordinate[1]] = xChecker;
 
-      let yChecker = new Checker('playerY');
+      const yChecker = new Checker('playerY');
       this.checkers.push(yChecker);
-      let coordinate2 = yPositions[i];
+      const coordinate2 = yPositions[i];
       this.grid[coordinate2[0]][coordinate2[1]] = yChecker;
     }
   }
@@ -119,7 +120,7 @@ class Board {
   }
 }
 
-let player = "playerX";
+let player = "playerY";
 
 class Game {
   constructor() {
@@ -131,15 +132,15 @@ class Game {
   }
 
   moveChecker(whichPiece, toWhere){
-    let coordinatePairPair = (whichPiece+toWhere).split('');
-    let whichCoordinate = whichPiece.split('');
-      let whichRow = Number(whichCoordinate[0]);
-      let whichColumn = Number(whichCoordinate[1]);
-    let whereCoordinate = toWhere.split('');
-      let whereRow = Number(whereCoordinate[0]);
-      let whereColumn = Number(whereCoordinate[1]);
-    let checkerPlay = this.board.grid[whichRow][whichColumn];
-    let checkerPlace = this.board.grid[whereRow][whereColumn];
+    const coordinatePairPair = (whichPiece+toWhere).split('');
+    const whichCoordinate = whichPiece.split('');
+      const whichRow = Number(whichCoordinate[0]);
+      const whichColumn = Number(whichCoordinate[1]);
+    const whereCoordinate = toWhere.split('');
+      const whereRow = Number(whereCoordinate[0]);
+      const whereColumn = Number(whereCoordinate[1]);
+    const checkerPlay = this.board.grid[whichRow][whichColumn];
+    const checkerPlace = this.board.grid[whereRow][whereColumn];
 
     if(game.isCoordinate(coordinatePairPair)){
       if(game.isNumberOnBoard(coordinatePairPair)){
@@ -165,7 +166,7 @@ class Game {
   }
 
   isNumberOnBoard(coordinatePairPair){
-    let numbers = ['0', '1', '2', '3', '4', '5', '6', '7'];
+    const numbers = ['0', '1', '2', '3', '4', '5', '6', '7'];
     let allNumbers = 0
     for(var i=0; i<4; i++){
       if(numbers.indexOf(coordinatePairPair[i]) > -1){
