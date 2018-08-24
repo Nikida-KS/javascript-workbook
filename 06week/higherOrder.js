@@ -3,8 +3,13 @@
 const assert = require('assert');
 
 function forEach(arr, callback) {
-  // Your code here
-}
+ for(let i =0 ; i < arr.length; i++){
+   console.log(arr[i]);
+   if(callback){
+     callback(arr[i]);
+     }
+   }
+ }
 
 function map(arr, callback) {
   // Your code here
