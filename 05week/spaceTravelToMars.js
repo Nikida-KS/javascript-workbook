@@ -9,7 +9,44 @@ let jobTypes = {
   programmer: 'Any Ship!'
 };
 
-// Your code here
+//1. create class for crew members with constructors
+
+
+class CrewMember {
+  constructor(name, job, specialSkill){
+    this.name = name;
+    this.job = job;
+    this.specialSkill = specialSkill;
+    this.ship = null;
+  }
+
+//3. write enterShip method to assign ship to CrewMember and this crew member to the ship array
+  enterShip(ship){
+    this.ship = ship;
+    ship.crew.push(this);
+  }
+}
+
+//2. create a class for ship with constructors
+
+class Ship {
+  constructor (name, type, ability){
+    this.name = name;
+    this.type = type;
+    this.ability = ability;
+    this.crew = [];
+  }
+
+//4. write a missionStatement method to make sure there is a crew on the ship and return the correct statement. 
+  missionStatement(){
+    if(this.crew.length > 0){
+      return this.ability
+    }
+    else{
+      return "Can't perform a mission yet."
+    }
+  }
+}
 
 //tests
 if (typeof describe === 'function'){
