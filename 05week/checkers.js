@@ -7,15 +7,82 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+//MVP
 
-function Checker() {
+//Check for legal move
+  //whichPiece must have something to move
+  //toWhere must be >=0 && toWhere <8 so it stays on the board
+  //toWhere must be null
+
+  //X can only
+    //kill
+    //or move up one row and left/right one column ([r+1]&&[c-1] || [c+1])
+
+  //Y can only
+    //kill
+    //or move down one row and left/right one column ([r-1]&&[c-1] || [c+1])
+
+//Move the piece
+  //Replace whichPiece with a null and toWhere with current turn
+
+//Kill
+  //X can kill a Y that is one row and left/right one column ([r+1]&&[c-1] || [c+1])
+  //Y can kill an X that is down one row and left/right one column ([r-1]&&[c-1] || [c+1])
+  //Replace 'jumped' piece with a null
+
+//Switch players
+
+
+
+
+function Checkers() {
   // Your code here
+}
+
+
+//Creates checkers that assign a symbol to a player
+class Checker {
+  constructor(player, symbol){
+    this.player = player
+    this.symbol = symbol;
+    if (player === 'playerY') {
+      this.symbol = "Y";
+    }
+    else {
+      this.symbol = "X";
+    }
+  }
 }
 
 class Board {
   constructor() {
-    this.grid = []
+    this.grid = [];
+    //keep track of how many checkers are on the board
+    this.checkers = [];
   }
+  // Put X's on 01, 03, 05, 07, 10, 12, 14, 16, 21, 23, 25, 27
+  // Put Y's on 50, 52, 54, 56, 61, 63, 65, 67, 70, 72, 74, 76
+  createCheckers(){
+    const xPositions = [[0, 1], [0, 3], [0, 5], [0, 7],
+                      [1, 0], [1, 2], [1, 4], [1, 6],
+                      [2, 1], [2, 3], [2, 5], [2, 7]];
+    const yPositions = [[5, 0], [5, 2], [5, 4], [5, 6],
+                      [6, 1], [6, 3], [6, 5], [6, 7],
+                      [7, 0], [7, 2], [7, 4], [7, 6]];
+  // Loops through the Positions arrays to assign a new Checker at each coordinate and push to the game.checker array 
+    for (let i = 0; i <= 11; i++) {
+      const xChecker = new Checker('playerX');
+      this.checkers.push("xChecker");
+      const coordinate = xPositions[i];
+      this.grid[coordinate[0]][coordinate[1]] = xChecker;
+
+      const yChecker = new Checker('playerY');
+      this.checkers.push(yChecker);
+      const coordinate2 = yPositions[i];
+      this.grid[coordinate2[0]][coordinate2[1]] = yChecker;
+    }
+  }
+
   // method that creates an 8x8 array, filled with null values
   createGrid() {
     // loop to create the 8 rows
@@ -51,16 +118,145 @@ class Board {
     }
     console.log(string);
   }
-
-  // Your code here
 }
+
+let player = "playerY";
 
 class Game {
   constructor() {
-    this.board = new Board;
+    this.board = new Board()
   }
   start() {
     this.board.createGrid();
+    this.board.createCheckers();
+  }
+
+  moveChecker(whichPiece, toWhere){
+    const coordinatePairPair = (whichPiece+toWhere).split('');
+    const whichCoordinate = whichPiece.split('');
+      const whichRow = Number(whichCoordinate[0]);
+      const whichColumn = Number(whichCoordinate[1]);
+    const whereCoordinate = toWhere.split('');
+      const whereRow = Number(whereCoordinate[0]);
+      const whereColumn = Number(whereCoordinate[1]);
+    const checkerPlay = this.board.grid[whichRow][whichColumn];
+    const checkerPlace = this.board.grid[whereRow][whereColumn];
+
+    if(game.isCoordinate(coordinatePairPair)){
+      if(game.isNumberOnBoard(coordinatePairPair)){
+        if(game.isChecker(checkerPlay, checkerPlace)){
+          if(game.isForward(checkerPlay, whereRow, whichRow)){
+            if(game.isKillAttempt(whereColumn, whichColumn, whereRow, whichRow)){
+              if(game.canKill(whereColumn, whichColumn, whereRow, whichRow, checkerPlay, checkerPlace)){
+                game.kill(whereColumn, whichColumn, whereRow, whichRow, checkerPlay, checkerPlace);
+                game.switchPlayers();
+                console.log(game.board.checkers.length)
+              }
+            }
+            else{
+              if(game.isSingleMoveAttempt(whereColumn, whichColumn, whereRow, whichRow)){
+                 game.singleMove(whichRow, whichColumn, whereRow, whereColumn, checkerPlay);
+                 game.switchPlayers();
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  isNumberOnBoard(coordinatePairPair){
+    const numbers = ['0', '1', '2', '3', '4', '5', '6', '7'];
+    let allNumbers = 0
+    for(var i=0; i<4; i++){
+      if(numbers.indexOf(coordinatePairPair[i]) > -1){
+        allNumbers++
+      }
+    }
+    return(allNumbers === 4)
+  }
+
+  isChecker(checkerPlay, checkerPlace){
+    return checkerPlay !== null && checkerPlace == null
+  }
+
+  isCoordinate(coordinatePairPair){
+    return coordinatePairPair.length === 4
+  }
+
+  isForward(checkerPlay, whereRow, whichRow){
+    if(player==="playerX" && checkerPlay.player === "playerX"){
+      return (whereRow > whichRow)
+    }
+    else if(player==="playerY" && checkerPlay.player === "playerY"){
+      return (whereRow < whichRow)
+    }
+  }
+
+  isKillAttempt(whereColumn, whichColumn, whereRow, whichRow){
+    return (Math.abs(whereColumn-whichColumn)===2 && Math.abs(whereRow-whichRow)==2)
+  }
+
+  canKill(whereColumn, whichColumn, whereRow, whichRow, checkerPlay, checkerPlace){
+    let prey = null
+    if(player === 'playerX'){
+      if(whereColumn > whichColumn){
+        prey = this.board.grid[whichRow+1][whichColumn+1]
+      }
+      else if(whereColumn < whichColumn){
+        prey = this.board.grid[whichRow+1][whichColumn-1]
+      }
+    }
+    else if(player === 'playerY'){
+      if(whereColumn > whichColumn){
+        prey = this.board.grid[whichRow-1][whichColumn+1]
+      }
+      else if(whereColumn < whichColumn){
+        prey = this.board.grid[whichRow-1][whichColumn-1]
+      }
+    }
+    return (prey !== null && prey !== checkerPlay)
+  }
+
+  kill(whereColumn, whichColumn, whereRow, whichRow, checkerPlay, checkerPlace){
+    this.board.grid[whichRow][whichColumn] = null;
+    this.board.grid[whereRow][whereColumn] = checkerPlay;
+    this.board.checkers.pop();
+    if(player === 'playerX'){
+      if(whereColumn > whichColumn){
+        this.board.grid[whichRow+1][whichColumn+1] = null
+      }
+      else if(whereColumn < whichColumn){
+        this.board.grid[whichRow+1][whichColumn-1] = null
+      }
+    }
+    else if(player === 'playerY'){
+      if(whereColumn > whichColumn){
+        this.board.grid[whichRow-1][whichColumn+1] = null
+      }
+      else if(whereColumn < whichColumn){
+        this.board.grid[whichRow-1][whichColumn-1] = null
+      }
+    }
+  }
+
+  isSingleMoveAttempt(whereColumn, whichColumn, whereRow, whichRow){
+    return (Math.abs(whereColumn-whichColumn)===1 && Math.abs(whereRow-whichRow)==1)
+  }
+
+  singleMove(whichRow, whichColumn, whereRow, whereColumn, checkerPlay){
+    this.board.grid[whichRow][whichColumn] = null;
+    this.board.grid[whereRow][whereColumn] = checkerPlay;
+  }
+
+  switchPlayers(){
+    if(player === "playerX"){
+      player = "playerY"
+    }
+    else{
+      player = "playerX"
+    }
+    console.log(player)
   }
 }
 
