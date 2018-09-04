@@ -11,7 +11,7 @@ function forEach(arr, callback) {
 }
 
 function map(arr, callback) {
-  let mapped = [];
+  const mapped = [];
   for(let i=0 ; i < arr.length; i++){
     if(callback){
      mapped.push(callback(arr[i]));
@@ -21,7 +21,7 @@ function map(arr, callback) {
 }
 
 function filter(arr, callback) {
-  let filtered = [];
+  const filtered = [];
   for(let i=0 ; i < arr.length; i++){
     if(callback(arr[i]) === true){
      filtered.push(arr[i]);
